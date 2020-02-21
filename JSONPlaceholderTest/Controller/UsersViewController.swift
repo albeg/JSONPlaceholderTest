@@ -9,6 +9,8 @@ import UIKit
 
 class UsersViewController: UIViewController {
 
+    var users: [User]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
