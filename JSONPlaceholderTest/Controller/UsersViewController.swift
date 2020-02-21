@@ -9,23 +9,70 @@ import UIKit
 
 class UsersViewController: UIViewController {
 
-    var users: [User]()
+    let networkClient = NetworkClient()
+    var users = [User]()
+    var tableView = UITableView()
+    
+    
+    override func loadView() {
+        super.loadView()
+        view.backgroundColor = .white
+        setupTableView()
+        self.title = "Users"
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        networkClient.getUsers() { users, error in
+            self.users = users
+            self.tableView.reloadData()
+        }
+    }
+    
+    func setupTableView() {
+        view.addSubview(tableView)
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
+            tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor)
+        ])
+        
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UsersTableViewCell")
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
+
+extension UsersViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return users.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UsersTableViewCell")!
+        
+        let user = users[indexPath.row]
+        
+        cell.textLabel?.text = "\(user.name)"
+        
+        return cell
+    }
+    
+    
+    
+}
+
+
