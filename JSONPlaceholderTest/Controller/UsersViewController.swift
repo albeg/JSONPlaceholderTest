@@ -11,6 +11,7 @@ class UsersViewController: UIViewController {
 
     let networkClient = NetworkClient()
     var users = [User]()
+    
     var tableView = UITableView()
     
     
@@ -67,11 +68,35 @@ extension UsersViewController: UITableViewDelegate, UITableViewDataSource {
         let user = users[indexPath.row]
         
         cell.textLabel?.text = "\(user.name)"
+        cell.accessoryType = .disclosureIndicator
         
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let user = users[indexPath.row]
+        
+        let cell = tableView.cellForRow(at: indexPath)
+        let indicator = UIActivityIndicatorView(style: .gray)
+        cell?.accessoryView = indicator
+        indicator.startAnimating()
+        
+        networkClient.getAlbums(for: user.id) { (albums, error) in
+            self.networkClient.getPhotos(for: albums) { (photos, error) in
+                
+                cell?.accessoryView = nil
+                cell?.accessoryType = .disclosureIndicator
+                
+                let vc = PhotosViewController()
+                vc.photos = photos
+                vc.modalPresentationStyle = .fullScreen
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
     
 }
 
