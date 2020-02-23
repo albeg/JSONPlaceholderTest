@@ -29,8 +29,12 @@ class UsersViewController: UIViewController {
         tableView.dataSource = self
         
         networkClient.getUsers() { users, error in
-            self.users = users
-            self.tableView.reloadData()
+            if let message = error?.localizedDescription {
+                self.showError(message: message)
+            } else {
+                self.users = users
+                self.tableView.reloadData()
+            }
         }
     }
     
@@ -96,18 +100,25 @@ extension UsersViewController: UITableViewDelegate, UITableViewDataSource {
             indicator.startAnimating()
             
             networkClient.getAlbums(for: user.id) { (albums, error) in
-                self.networkClient.getPhotos(for: albums) { (photos, error) in
-                    cell?.accessoryView = nil
-                    cell?.accessoryType = .disclosureIndicator
-                    self.photosForUser[user.id] = photos
-                    vc.photos = photos
-                    self.navigationController?.pushViewController(vc, animated: true)
+                if let message = error?.localizedDescription {
+                    self.showError(message: message)
+                } else {
+                    self.networkClient.getPhotos(for: albums) { (photos, error) in
+                        if let message = error?.localizedDescription {
+                            self.showError(message: message)
+                        } else {
+                            cell?.accessoryView = nil
+                            cell?.accessoryType = .disclosureIndicator
+                            self.photosForUser[user.id] = photos
+                            vc.photos = photos
+                            self.navigationController?.pushViewController(vc, animated: true)
+                        }
+                    }
                 }
             }
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
 }
 
 extension UITableView {

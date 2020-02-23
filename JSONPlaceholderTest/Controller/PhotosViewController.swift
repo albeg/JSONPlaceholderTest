@@ -65,6 +65,7 @@ extension PhotosViewController: UITableViewDelegate, UITableViewDataSource {
             cell.indicator.startAnimating()
             networkClient.downloadImage(path: photo.url) { (data, error) in
                 guard let data = data else {
+                    self.showError(message: error?.localizedDescription ?? "")
                     return
                 }
                 cell.indicator.stopAnimating()

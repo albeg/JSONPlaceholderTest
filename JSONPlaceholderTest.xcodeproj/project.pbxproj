@@ -11,6 +11,7 @@
 		7C344213240018930070C45F /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C344212240018930070C45F /* Album.swift */; };
 		7C344215240023180070C45F /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C344214240023180070C45F /* Photo.swift */; };
 		7C498BD12401486C00339872 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C498BD02401486C00339872 /* PhotoCell.swift */; };
+		7C750C3B2402B15000797881 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C750C3A2402B15000797881 /* UIViewController+Extension.swift */; };
 		7C85CE5023FFF89900A051FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C85CE4F23FFF89900A051FE /* AppDelegate.swift */; };
 		7C85CE5223FFF89900A051FE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C85CE5123FFF89900A051FE /* SceneDelegate.swift */; };
 		7C85CE5923FFF89A00A051FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C85CE5823FFF89A00A051FE /* Assets.xcassets */; };
@@ -25,6 +26,7 @@
 		7C344212240018930070C45F /* Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		7C344214240023180070C45F /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		7C498BD02401486C00339872 /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
+		7C750C3A2402B15000797881 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		7C85CE4C23FFF89900A051FE /* JSONPlaceholderTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JSONPlaceholderTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C85CE4F23FFF89900A051FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7C85CE5123FFF89900A051FE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 				7C85CE5A23FFF89A00A051FE /* LaunchScreen.storyboard */,
 				7C85CE5D23FFF89A00A051FE /* Info.plist */,
 				7C85CE6923FFFE9D00A051FE /* NetworkClient.swift */,
+				7C750C3A2402B15000797881 /* UIViewController+Extension.swift */,
 			);
 			path = JSONPlaceholderTest;
 			sourceTree = "<group>";
@@ -183,6 +186,7 @@
 				7C34421124000D3C0070C45F /* PhotosViewController.swift in Sources */,
 				7C85CE5023FFF89900A051FE /* AppDelegate.swift in Sources */,
 				7C344213240018930070C45F /* Album.swift in Sources */,
+				7C750C3B2402B15000797881 /* UIViewController+Extension.swift in Sources */,
 				7C85CE5223FFF89900A051FE /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

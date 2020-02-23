@@ -48,7 +48,9 @@ class NetworkClient {
                     completion(responseObject, nil)
                 }
             } catch {
-                
+                DispatchQueue.main.async {
+                    completion(nil, error)
+                }
             }
         }
         task.resume()
