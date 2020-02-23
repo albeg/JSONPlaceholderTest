@@ -74,10 +74,14 @@ extension PhotosViewController: UITableViewDelegate, UITableViewDataSource {
                     self.showError(message: error?.localizedDescription ?? "")
                     return
                 }
-                cell.indicator.stopAnimating()
                 let image = UIImage(data: data)!
                 self.imageCache.setObject(image, forKey: photo.url as NSString)
-                cell.photoImageView.image = image
+                
+                // Check if it cell that we want to update
+                if let updatedCell = tableView.cellForRow(at: indexPath) {
+                    (updatedCell as! PhotoCell).indicator.stopAnimating()
+                    (updatedCell as! PhotoCell).photoImageView.image = image
+                }
             }
         }
         return cell
