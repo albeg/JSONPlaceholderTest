@@ -79,12 +79,14 @@ class NetworkClient {
     }
     
     func getPhotos(for albums: [Album], completion: @escaping ([Photo], Error?) -> Void) {
+        // Build url for request
         var components = URLComponents()
         components.scheme = "https"
         components.host = "jsonplaceholder.typicode.com"
         components.path = "/photos"
         components.queryItems = [URLQueryItem]()
         
+        // Add parameters for GET request
         for album in albums {
             components.queryItems?.append(URLQueryItem(name: "albumId",
                                                         value: String(album.id)))

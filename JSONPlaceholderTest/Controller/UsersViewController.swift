@@ -9,25 +9,24 @@ import UIKit
 
 class UsersViewController: UIViewController {
 
-    let networkClient = NetworkClient()
-    var users = [User]()
-    var photosForUser = [Int:[Photo]]()
-    var tableView = UITableView()
+    //MARK: Properties
+    private let networkClient = NetworkClient()
+    private var users = [User]()
+    private var photosForUser = [Int:[Photo]]()
+    private var tableView = UITableView()
     
-    
+    //MARK: VC Lifecycle
     override func loadView() {
         super.loadView()
         view.backgroundColor = .white
-        setupTableView()
         self.title = "Users"
+        setupTableView()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.delegate = self
-        tableView.dataSource = self
-        
+        // Fetch users and reload tableView
         networkClient.getUsers() { users, error in
             if let message = error?.localizedDescription {
                 self.showError(message: message)
@@ -38,10 +37,14 @@ class UsersViewController: UIViewController {
         }
     }
     
-    func setupTableView() {
+    //MARK: Utility methods
+    private func setupTableView() {
         view.addSubview(tableView)
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UsersTableViewCell")
+        tableView.delegate = self
+        tableView.dataSource = self
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
@@ -49,15 +52,11 @@ class UsersViewController: UIViewController {
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor)
         ])
-        
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UsersTableViewCell")
     }
-    
-
 }
 
+    //MARK: TableView methods
 extension UsersViewController: UITableViewDelegate, UITableViewDataSource {
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -68,13 +67,11 @@ extension UsersViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             self.tableView.restore()
         }
-
         return users.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UsersTableViewCell")!
-        
         let user = users[indexPath.row]
         
         cell.textLabel?.text = "\(user.name)"
@@ -84,31 +81,36 @@ extension UsersViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let user = users[indexPath.row]
-        
         let cell = tableView.cellForRow(at: indexPath)
+        let user = users[indexPath.row]
         let vc = PhotosViewController()
         vc.modalPresentationStyle = .fullScreen
         
+        // Set photos that already exist
         if let photos = photosForUser[user.id] {
             vc.photos = photos
             self.navigationController?.pushViewController(vc, animated: true)
         } else {
+            // Add acivityIndicator
             let indicator = UIActivityIndicatorView(style: .gray)
             cell?.accessoryView = indicator
             indicator.startAnimating()
             
+            // Fetch albums for selected user
             networkClient.getAlbums(for: user.id) { (albums, error) in
                 if let message = error?.localizedDescription {
                     self.showError(message: message)
                 } else {
+                    // Fetch photos for selected user
                     self.networkClient.getPhotos(for: albums) { (photos, error) in
                         if let message = error?.localizedDescription {
                             self.showError(message: message)
                         } else {
+                            // Change activityIndicator to disclosureIndicator
                             cell?.accessoryView = nil
                             cell?.accessoryType = .disclosureIndicator
+                            
+                            // Add photos to dictionary and pass them to PhotosVC
                             self.photosForUser[user.id] = photos
                             vc.photos = photos
                             self.navigationController?.pushViewController(vc, animated: true)
@@ -118,27 +120,6 @@ extension UsersViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
         tableView.deselectRow(at: indexPath, animated: true)
-    }
-}
-
-extension UITableView {
-
-    func setEmptyMessage(_ message: String) {
-        let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height))
-        messageLabel.text = message
-        messageLabel.textColor = .black
-        messageLabel.numberOfLines = 0
-        messageLabel.textAlignment = .center
-        messageLabel.font = UIFont(name: "TrebuchetMS", size: 25)
-        messageLabel.sizeToFit()
-
-        self.backgroundView = messageLabel
-        self.separatorStyle = .none
-    }
-
-    func restore() {
-        self.backgroundView = nil
-        self.separatorStyle = .singleLine
     }
 }
 

@@ -9,11 +9,13 @@ import UIKit
 
 class PhotosViewController: UIViewController {
 
+    //MARK: Properties
     var photos = [Photo]()
     private let networkClient = NetworkClient()
     private let tableView = UITableView()
     private let imageCache = NSCache<NSString, UIImage>()
     
+    //MARK: VC Lifecycle
     override func loadView() {
         super.loadView()
         view.backgroundColor = .white
@@ -21,13 +23,14 @@ class PhotosViewController: UIViewController {
         setupTableView()
     }
     
+    //MARK: Utility methods
     private func setupTableView() {
         view.addSubview(tableView)
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(PhotoCell.self, forCellReuseIdentifier: PhotoCell.identifier)
-        tableView.backgroundColor = .white
         tableView.separatorStyle = .none
+        tableView.allowsSelection = false
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -41,6 +44,7 @@ class PhotosViewController: UIViewController {
     }
 }
 
+    //MARK: TableView methods
 extension PhotosViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -59,9 +63,11 @@ extension PhotosViewController: UITableViewDelegate, UITableViewDataSource {
         cell.photoImageView.image = UIImage(named: "image")
         cell.titleLabel.text = photo.title
         
+        // Get image from cache if it exists
         if let cachedImage = imageCache.object(forKey: photo.url as NSString) {
             cell.photoImageView.image = cachedImage
         } else {
+            // DownloadImage for all user's albums
             cell.indicator.startAnimating()
             networkClient.downloadImage(path: photo.url) { (data, error) in
                 guard let data = data else {
@@ -76,7 +82,6 @@ extension PhotosViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return cell
     }
-    
 }
 
 
