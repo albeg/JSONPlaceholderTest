@@ -97,4 +97,15 @@ class NetworkClient {
             }
         }
     }
+    
+    func downloadImage(path: String, completion: @escaping (Data?, Error?) -> Void) {
+        if let url = URL(string: path){
+            let task = URLSession.shared.dataTask(with: url) { data, response, error in
+                DispatchQueue.main.async {
+                    completion(data, error)
+                }
+            }
+            task.resume()
+        }
+    }
 }

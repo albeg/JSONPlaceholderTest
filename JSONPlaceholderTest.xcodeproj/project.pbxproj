@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C34421124000D3C0070C45F /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C34421024000D3C0070C45F /* PhotosViewController.swift */; };
+		7C344213240018930070C45F /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C344212240018930070C45F /* Album.swift */; };
+		7C344215240023180070C45F /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C344214240023180070C45F /* Photo.swift */; };
+		7C498BD12401486C00339872 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C498BD02401486C00339872 /* PhotoCell.swift */; };
 		7C85CE5023FFF89900A051FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C85CE4F23FFF89900A051FE /* AppDelegate.swift */; };
 		7C85CE5223FFF89900A051FE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C85CE5123FFF89900A051FE /* SceneDelegate.swift */; };
 		7C85CE5923FFF89A00A051FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C85CE5823FFF89A00A051FE /* Assets.xcassets */; };
@@ -17,6 +21,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7C34421024000D3C0070C45F /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
+		7C344212240018930070C45F /* Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
+		7C344214240023180070C45F /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		7C498BD02401486C00339872 /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		7C85CE4C23FFF89900A051FE /* JSONPlaceholderTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JSONPlaceholderTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C85CE4F23FFF89900A051FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7C85CE5123FFF89900A051FE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -39,6 +47,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7C498BD224028E4A00339872 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7C498BD02401486C00339872 /* PhotoCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		7C85CE4323FFF89900A051FE = {
 			isa = PBXGroup;
 			children = (
@@ -59,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				7C85CE6823FFFC9C00A051FE /* Model */,
+				7C498BD224028E4A00339872 /* View */,
 				7C85CE6523FFFC7C00A051FE /* Controller */,
 				7C85CE4F23FFF89900A051FE /* AppDelegate.swift */,
 				7C85CE5123FFF89900A051FE /* SceneDelegate.swift */,
@@ -74,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				7C85CE6323FFF9B100A051FE /* UsersViewController.swift */,
+				7C34421024000D3C0070C45F /* PhotosViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -82,6 +100,8 @@
 			isa = PBXGroup;
 			children = (
 				7C85CE6623FFFC9700A051FE /* User.swift */,
+				7C344212240018930070C45F /* Album.swift */,
+				7C344214240023180070C45F /* Photo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -155,10 +175,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C344215240023180070C45F /* Photo.swift in Sources */,
+				7C498BD12401486C00339872 /* PhotoCell.swift in Sources */,
 				7C85CE6723FFFC9700A051FE /* User.swift in Sources */,
 				7C85CE6A23FFFE9D00A051FE /* NetworkClient.swift in Sources */,
 				7C85CE6423FFF9B100A051FE /* UsersViewController.swift in Sources */,
+				7C34421124000D3C0070C45F /* PhotosViewController.swift in Sources */,
 				7C85CE5023FFF89900A051FE /* AppDelegate.swift in Sources */,
+				7C344213240018930070C45F /* Album.swift in Sources */,
 				7C85CE5223FFF89900A051FE /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
