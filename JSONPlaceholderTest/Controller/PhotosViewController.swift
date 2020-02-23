@@ -12,6 +12,7 @@ class PhotosViewController: UIViewController {
     var photos = [Photo]()
     private let networkClient = NetworkClient()
     private let tableView = UITableView()
+    private let imageCache = NSCache<NSString, UIImage>()
     
     override func loadView() {
         super.loadView()
@@ -38,7 +39,6 @@ class PhotosViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor)
         ])
     }
-
 }
 
 extension PhotosViewController: UITableViewDelegate, UITableViewDataSource {
@@ -59,15 +59,20 @@ extension PhotosViewController: UITableViewDelegate, UITableViewDataSource {
         cell.photoImageView.image = UIImage(named: "image")
         cell.titleLabel.text = photo.title
         
-        cell.indicator.startAnimating()
-        networkClient.downloadImage(path: photo.url) { (data, error) in
-            guard let data = data else {
-                return
+        if let cachedImage = imageCache.object(forKey: photo.url as NSString) {
+            cell.photoImageView.image = cachedImage
+        } else {
+            cell.indicator.startAnimating()
+            networkClient.downloadImage(path: photo.url) { (data, error) in
+                guard let data = data else {
+                    return
+                }
+                cell.indicator.stopAnimating()
+                let image = UIImage(data: data)!
+                self.imageCache.setObject(image, forKey: photo.url as NSString)
+                cell.photoImageView.image = image
             }
-            cell.indicator.stopAnimating()
-            cell.photoImageView.image = UIImage(data: data)
         }
-        
         return cell
     }
     
