@@ -40,6 +40,18 @@ class PhotoCell: UITableViewCell {
         return view
     }()
     
+    let shadowView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 5
+        view.layer.shadowColor = UIColor.darkGray.cgColor
+        view.layer.shadowOffset = CGSize(width: 0.5, height: 0.5)
+        view.layer.shadowRadius = 5.0
+        view.layer.shadowOpacity = 0.45
+        
+        return view
+    }()
+    
     let indicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
         indicator.translatesAutoresizingMaskIntoConstraints = false
@@ -62,10 +74,16 @@ class PhotoCell: UITableViewCell {
     private func setViews() {
         view.addSubview(photoImageView)
         view.addSubview(titleLabel)
-        contentView.addSubview(view)
+        shadowView.addSubview(view)
+        contentView.addSubview(shadowView)
         contentView.addSubview(indicator)
         
         NSLayoutConstraint.activate([
+            
+            shadowView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            shadowView.widthAnchor.constraint(equalToConstant: 300),
+            shadowView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            shadowView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             
             view.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             view.widthAnchor.constraint(equalToConstant: 300),
